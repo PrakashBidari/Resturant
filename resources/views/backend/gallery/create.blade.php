@@ -1,0 +1,97 @@
+@extends('backend.layouts.master')
+@section('main')
+    <section class="section">
+        <div class="row">
+
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Vertical Form</h5>
+
+                        <!-- Vertical Form -->
+                        <form action="{{ route('galleries.store') }}" method="post" enctype="multipart/form-data" class="row g-3" id="my-form">
+                            @csrf
+                            <div class="col-6">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="{{ old('title') }}">
+                                @error('title')
+                                    <p class="text-danger mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+
+                            <div class="col-6">
+                                <label for="slug" class="form-label">Slug</label>
+                                <input type="text" name="slug" class="form-control" id="slug"
+                                    value="{{ old('slug') }}">
+                                @error('slug')
+                                    <p class="text-danger mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+
+
+                            <div class="col-12">
+                                <label for="iamge" class="form-label">Image</label>
+                                <input type="file" name="images[]" multiple class="form-control" id="image"
+                                    value="{{ old('image') }}">
+                                    @if ($errors->hasAny(['images.*', 'images']))
+                                    <span class="text-xs text-red-600 dark:text-red-400">
+                                        {{ $errors->first('images') }}
+                                        @foreach ($errors->get('images.*') as $error)
+                                            @php
+                                                $i = 0;
+                                                echo $error[$i] . '<br>';
+                                                $i++;
+                                            @endphp
+                                        @endforeach
+                                    </span>
+                                @endif
+                            </div>
+
+                            {{-- <div class="col-6">
+                                <label for="alt_text" class="form-label">Alt text</label>
+                                <input type="text" name="alt_text" class="form-control" id="alt_text"
+                                    value="{{ old('alt_text') }}">
+                                @error('alt_text')
+                                    <p class="text-danger mt-1">{{ $message }}</p>
+                                @enderror
+                            </div> --}}
+
+                            <hr>
+
+                            <div class="col-12">
+                                <label for="meta_title" class="form-label">Meta Title</label>
+                                <input type="text" name="meta_title" class="form-control" id="meta_title"
+                                    value="{{ old('meta_title') }}">
+                                @error('meta_title')
+                                    <p class="text-danger mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="meta_description" class="form-label">Meta Description</label>
+                                <textarea class="form-control" name="meta_description" id="meta_description" cols="30" rows="3">{{ old('meta_description') }}</textarea>
+                                @error('meta_description')
+                                    <p class="text-danger mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" onclick="location.reload()" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </form><!-- Vertical Form -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+@endsection
+
